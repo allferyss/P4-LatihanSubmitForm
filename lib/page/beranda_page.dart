@@ -66,8 +66,8 @@ class _BerandaPage extends State<BerandaPage> {
       context,
       assetImagepath: AnimatedImage.confirm,
       buttonsColor: Colors.green,
-      title: AlertTitleText("Apakah kamu yakin?"),
-      content: AlertContentText("Apakah kamu ingin menambahkan data"),
+      title: AlertTitleText("Konfirmasi submit?"),
+      content: AlertContentText("Yakin ingin menambahkan data?"),
       onConfirmButtonPressed: (ctx) {
         final name = _nameController.text.trim();
         final jobTitle = _jobTitleController.text.trim();
@@ -110,8 +110,8 @@ class _BerandaPage extends State<BerandaPage> {
       context,
       assetImagepath: AnimatedImage.warning,
       buttonsColor: Colors.green,
-      title: AlertTitleText("Apakah kamu yakin?"),
-      content: AlertContentText("Apakah kamu ingin menghapus data"),
+      title: AlertTitleText("Konfirmasi Hapus Data"),
+      content: AlertContentText("Yakin ingin menghapus data?"),
       onConfirmButtonPressed: (ctx) {
         _nameController.clear();
         _jobTitleController.clear();
@@ -133,7 +133,7 @@ class _BerandaPage extends State<BerandaPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        title: Text("Pertemuan 4"),
+        title: Text("Pertemuan 4 dan Pertemuan 5"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -162,7 +162,7 @@ class _BerandaPage extends State<BerandaPage> {
             _buildTextField(
               controller: _nameController,
               label: "Nama",
-              hint: "Masukkan nama...",
+              hint: "Masukkan nama anda...",
               icon: Icons.person,
             ),
 
@@ -170,7 +170,7 @@ class _BerandaPage extends State<BerandaPage> {
             _buildTextField(
               controller: _jobTitleController,
               label: "Pekerjaan",
-              hint: "Masukkan pekerjaan...",
+              hint: "Masukkan data pekerjaan anda...",
               icon: Icons.work,
             ),
 
@@ -178,15 +178,15 @@ class _BerandaPage extends State<BerandaPage> {
             _buildTextField(
               controller: _companyController,
               label: "Perusahaan",
-              hint: "Masukkan perusahaan...",
+              hint: "Masukkan nama perusahaan anda...",
               icon: Icons.business,
             ),
 
             // Form Lokasi
             _buildTextField(
               controller: _locationController,
-              label: "Lokasi",
-              hint: "Masukkan lokasi...",
+              label: "Lokasi Perusahaan",
+              hint: "Masukkan lokasi perusahaan anda bekerja...",
               icon: Icons.location_on,
             ),
 
@@ -194,7 +194,7 @@ class _BerandaPage extends State<BerandaPage> {
             _buildTextField(
               controller: _descriptionController,
               label: "Deskripsi",
-              hint: "Ceritakan tentang dirimu...",
+              hint: "Tentang diri anda...",
               icon: Icons.description,
               maxLines: 3,
             ),

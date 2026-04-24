@@ -21,12 +21,398 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final ScrollController _scrollController = ScrollController();
+  final ScrollController _portfolioScrollController = ScrollController();
+  bool _showScrollToTop = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      final show = _scrollController.offset > 300;
+      if (show != _showScrollToTop) {
+        setState(() {
+          _showScrollToTop = show;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _portfolioScrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollPortfolio(double offset) {
+    final double target = _portfolioScrollController.offset + offset;
+    _portfolioScrollController.animateTo(
+      target.clamp(
+        _portfolioScrollController.position.minScrollExtent,
+        _portfolioScrollController.position.maxScrollExtent,
+      ),
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  Widget _buildExperienceCard({
+    required IconData icon,
+    required String position,
+    required String company,
+    required String period,
+    required String desc,
+  }) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 10),
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.blueAccent.withAlpha(25),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, color: Colors.blueAccent, size: 24),
+          ),
+          SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  position,
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                ),
+                SizedBox(height: 2),
+                Text(
+                  company,
+                  style: TextStyle(fontSize: 13, color: Colors.black54),
+                ),
+                Text(
+                  period,
+                  style: TextStyle(fontSize: 12, color: Colors.black38),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  desc,
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.black87,
+                    height: 1.4,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSkillChip(String label, Color color) {
+    return Chip(
+      label: Text(label, style: TextStyle(color: Colors.white, fontSize: 13)),
+      backgroundColor: color,
+      padding: EdgeInsets.symmetric(horizontal: 6),
+    );
+  }
+
+  Widget _buildEducationCard({
+    required IconData icon,
+    required String institution,
+    required String degree,
+    required String period,
+  }) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 10),
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.blueAccent.withAlpha(25),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, color: Colors.blueAccent, size: 24),
+          ),
+          SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  institution,
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  degree,
+                  style: TextStyle(fontSize: 13, color: Colors.black54),
+                ),
+                Text(
+                  period,
+                  style: TextStyle(fontSize: 12, color: Colors.black38),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPortfolioCard({
+    required IconData icon,
+    required String title,
+    required String desc,
+    required Color color,
+    required List<String> tags,
+  }) {
+    return GestureDetector(
+      onTap: () => _showPortfolioDetail(
+        icon: icon,
+        title: title,
+        desc: desc,
+        color: color,
+        tags: tags,
+      ),
+      child: Container(
+        width: 160,
+        margin: EdgeInsets.only(right: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 6,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header gradient with icon
+            Container(
+              height: 60,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [color.withAlpha(180), color],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+              ),
+              child: Center(child: Icon(icon, size: 28, color: Colors.white)),
+            ),
+            // Info
+            Padding(
+              padding: EdgeInsets.fromLTRB(8, 6, 8, 4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 2),
+                  Text(
+                    desc,
+                    style: TextStyle(fontSize: 10, color: Colors.grey[600]),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 4),
+                  Wrap(
+                    spacing: 4,
+                    children: tags.map((tag) {
+                      return Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 1,
+                        ),
+                        decoration: BoxDecoration(
+                          color: color.withAlpha(30),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          tag,
+                          style: TextStyle(
+                            fontSize: 8,
+                            color: color,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
+            ),
+            // Click Me Button
+            Padding(
+              padding: EdgeInsets.fromLTRB(8, 0, 8, 6),
+              child: SizedBox(
+                width: double.infinity,
+                height: 26,
+                child: ElevatedButton(
+                  onPressed: () => _showPortfolioDetail(
+                    icon: icon,
+                    title: title,
+                    desc: desc,
+                    color: color,
+                    tags: tags,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: color,
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    elevation: 0,
+                  ),
+                  child: Text(
+                    "Click Me",
+                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showPortfolioDetail({
+    required IconData icon,
+    required String title,
+    required String desc,
+    required Color color,
+    required List<String> tags,
+  }) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: color.withAlpha(25),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(icon, color: color, size: 30),
+                  ),
+                  SizedBox(width: 15),
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 15),
+              Wrap(
+                spacing: 8,
+                children: tags.map((tag) {
+                  return Chip(
+                    label: Text(
+                      tag,
+                      style: TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                    backgroundColor: color,
+                    padding: EdgeInsets.symmetric(horizontal: 4),
+                  );
+                }).toList(),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Deskripsi Project',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              ),
+              SizedBox(height: 8),
+              Text(
+                desc,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.grey[700],
+                  height: 1.6,
+                ),
+              ),
+              SizedBox(height: 20),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: AnimatedOpacity(
+        opacity: _showScrollToTop ? 1.0 : 0.0,
+        duration: Duration(milliseconds: 300),
+        child: _showScrollToTop
+            ? FloatingActionButton(
+                onPressed: () {
+                  _scrollController.animateTo(
+                    0,
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                backgroundColor: Colors.blueAccent,
+                child: Icon(Icons.arrow_upward, color: Colors.white),
+              )
+            : SizedBox.shrink(),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
+          controller: _scrollController,
           padding: EdgeInsets.zero,
           child: Column(
             children: [
@@ -192,6 +578,217 @@ class _ProfilePageState extends State<ProfilePage> {
                           height: 1.5,
                         ),
                       ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Portfolio Section (Horizontal Scroll)
+              SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Portofolio",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.blueGrey,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 8),
+              SizedBox(
+                height: 190,
+                child: Row(
+                  children: [
+                    // Left arrow button
+                    GestureDetector(
+                      onTap: () => _scrollPortfolio(-150),
+                      child: Container(
+                        width: 28,
+                        height: 50,
+                        margin: EdgeInsets.only(left: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.blueAccent.withAlpha(20),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          Icons.chevron_left,
+                          color: Colors.blueAccent,
+                          size: 22,
+                        ),
+                      ),
+                    ),
+                    // Portfolio cards
+                    Expanded(
+                      child: ListView(
+                        controller: _portfolioScrollController,
+                        scrollDirection: Axis.horizontal,
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        children: [
+                          _buildPortfolioCard(
+                            icon: Icons.cloud,
+                            title: "Weather App",
+                            desc:
+                                "Cuaca real-time dengan animasi dan prakiraan 7 hari.",
+                            color: Color(0xFF00BCD4),
+                            tags: ["Flutter", "API"],
+                          ),
+                          _buildPortfolioCard(
+                            icon: Icons.people,
+                            title: "Social Media",
+                            desc: "Platform sosial dengan feed dan messaging.",
+                            color: Color(0xFFE91E63),
+                            tags: ["Flutter", "Node.js"],
+                          ),
+                          _buildPortfolioCard(
+                            icon: Icons.web,
+                            title: "Portfolio Web",
+                            desc:
+                                "Website portofolio responsif dengan dark mode.",
+                            color: Color(0xFFFF9800),
+                            tags: ["HTML", "CSS", "JS"],
+                          ),
+                          _buildPortfolioCard(
+                            icon: Icons.chat_bubble,
+                            title: "Chat App",
+                            desc: "Chat real-time dengan group chat dan media.",
+                            color: Color(0xFF4CAF50),
+                            tags: ["Flutter", "Socket.io"],
+                          ),
+                          _buildPortfolioCard(
+                            icon: Icons.task_alt,
+                            title: "Task Manager",
+                            desc:
+                                "Manajemen tugas dengan reminder dan statistik.",
+                            color: Color(0xFF9C27B0),
+                            tags: ["Flutter", "SQLite"],
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Right arrow button
+                    GestureDetector(
+                      onTap: () => _scrollPortfolio(150),
+                      child: Container(
+                        width: 28,
+                        height: 50,
+                        margin: EdgeInsets.only(right: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.blueAccent.withAlpha(20),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          Icons.chevron_right,
+                          color: Colors.blueAccent,
+                          size: 22,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Experience Section
+              SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Experience",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.blueGrey,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    _buildExperienceCard(
+                      icon: Icons.phone_android,
+                      position: "Junior Mobile Developer",
+                      company: "Universitas Pamulang",
+                      period: "Jan 2026 - Sekarang",
+                      desc:
+                          "Mengembangkan aplikasi mobile menggunakan Flutter dan Dart.",
+                    ),
+                    _buildExperienceCard(
+                      icon: Icons.code,
+                      position: "Freelance Web Developer",
+                      company: "Self-Employed",
+                      period: "Mei 2024 - Sekarang",
+                      desc: "Membuat website company profile untuk UMKM lokal.",
+                    ),
+                  ],
+                ),
+              ),
+
+              // Skills Section
+              SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Skills",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.blueGrey,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        _buildSkillChip("Flutter", Colors.blue),
+                        _buildSkillChip("Dart", Colors.teal),
+                        _buildSkillChip("JavaScript", Colors.amber[800]!),
+                        _buildSkillChip("HTML & CSS", Colors.orange),
+                        _buildSkillChip("C++", Colors.cyan),
+                        _buildSkillChip("Git", Colors.red),
+                        _buildSkillChip("Python", Colors.indigo),
+                        _buildSkillChip("MySQL", Colors.blueGrey),
+                        _buildSkillChip("Figma", Colors.purple),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              // Education Section
+              SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Education",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.blueGrey,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    _buildEducationCard(
+                      icon: Icons.school,
+                      institution: "Universitas Pamulang",
+                      degree: "S1 Ilmu Komputer",
+                      period: "2024 - Sekarang",
+                    ),
+                    _buildEducationCard(
+                      icon: Icons.account_balance,
+                      institution: "SMK Media Informatika Jakarta Selatan",
+                      degree: "Rekayasa Perangkat Lunak",
+                      period: "2021 - 2024",
                     ),
                   ],
                 ),

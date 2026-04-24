@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hasnan_latihan2pertemuan4/page/beranda_page.dart';
+
 import 'package:hasnan_latihan2pertemuan4/page/profile_page.dart';
+
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:cherry_toast/cherry_toast.dart';
-import 'package:simple_alert_dialog/simple_alert_dialog.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,7 +18,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int currentPage = 0;
-
   String _profileName = "Hasnan Fathir Al Ghiffary";
   String _profileJobTitle = "Flutter Software Engineer";
   String _profileCompany = "Universitas Pamulang";
@@ -65,14 +64,11 @@ class _MyAppState extends State<MyApp> {
           currentIndex: currentPage,
           onTap: (i) => setState(() => currentPage = i),
           items: [
-            // Beranda
             SalomonBottomBarItem(
               icon: Icon(Icons.home),
               title: Text("Beranda"),
               selectedColor: Colors.blue,
             ),
-
-            // Profile
             SalomonBottomBarItem(
               icon: Icon(Icons.person),
               title: Text("Profile"),
