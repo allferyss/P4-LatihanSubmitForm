@@ -221,7 +221,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             // Info
             Padding(
-              padding: EdgeInsets.fromLTRB(8, 6, 8, 4),
+              padding: EdgeInsets.fromLTRB(8, 6, 8, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -265,12 +265,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
             ),
-            // Click Me Button
+            Spacer(),
+            // Button Lihat Projek (di dalam card, bawah info)
             Padding(
-              padding: EdgeInsets.fromLTRB(8, 0, 8, 6),
-              child: SizedBox(
-                width: double.infinity,
-                height: 26,
+              padding: EdgeInsets.fromLTRB(8, 20, 8, 10),
+              child: Center(
                 child: ElevatedButton(
                   onPressed: () => _showPortfolioDetail(
                     icon: icon,
@@ -282,19 +281,22 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: color,
                     foregroundColor: Colors.white,
-                    padding: EdgeInsets.zero,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    minimumSize: Size(0, 0),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6),
                     ),
                     elevation: 0,
                   ),
                   child: Text(
-                    "Click Me",
+                    "Lihat Projek",
                     style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
             ),
+            Spacer(),
           ],
         ),
       ),
