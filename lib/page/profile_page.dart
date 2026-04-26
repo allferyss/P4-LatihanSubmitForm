@@ -557,7 +557,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "About",
+                      "About Me",
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.blueGrey,

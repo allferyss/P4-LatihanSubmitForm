@@ -1,8 +1,9 @@
-import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_alert_dialog/simple_alert_dialog.dart';
+import 'package:hasnan_latihan2pertemuan4/page/pertemuan4_page.dart';
+import 'package:hasnan_latihan2pertemuan4/page/pertemuan5_page.dart';
+import 'package:hasnan_latihan2pertemuan4/page/pertemuan6_page.dart';
 
-class BerandaPage extends StatefulWidget {
+class BerandaPage extends StatelessWidget {
   final Function({
     required String name,
     required String jobTitle,
@@ -15,299 +16,162 @@ class BerandaPage extends StatefulWidget {
   const BerandaPage({super.key, required this.onProfileSubmit});
 
   @override
-  State<BerandaPage> createState() => _BerandaPage();
-}
-
-class _BerandaPage extends State<BerandaPage> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _jobTitleController = TextEditingController();
-  final TextEditingController _companyController = TextEditingController();
-  final TextEditingController _locationController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _jobTitleController.dispose();
-    _companyController.dispose();
-    _locationController.dispose();
-    _descriptionController.dispose();
-    super.dispose();
-  }
-
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required String hint,
-    required IconData icon,
-    int maxLines = 1,
-  }) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      child: TextField(
-        controller: controller,
-        maxLines: maxLines,
-        decoration: InputDecoration(
-          labelText: label,
-          hintText: hint,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: Colors.blueAccent, width: 2),
-          ),
-          prefixIcon: Icon(icon),
-        ),
-      ),
-    );
-  }
-
-  void _submitForm() {
-    SimpleAlertDialog.show(
-      context,
-      assetImagepath: AnimatedImage.confirm,
-      buttonsColor: Colors.green,
-      title: AlertTitleText("Konfirmasi submit?"),
-      content: AlertContentText("Yakin ingin menambahkan data?"),
-      onConfirmButtonPressed: (ctx) {
-        final name = _nameController.text.trim();
-        final jobTitle = _jobTitleController.text.trim();
-        final company = _companyController.text.trim();
-        final location = _locationController.text.trim();
-        final desc = _descriptionController.text.trim();
-
-        if (name.isNotEmpty && jobTitle.isNotEmpty) {
-          widget.onProfileSubmit(
-            name: name,
-            jobTitle: jobTitle,
-            company: company.isNotEmpty ? company : "Google",
-            location: location.isNotEmpty ? location : "Jakarta, Indonesia",
-            description: desc.isNotEmpty ? desc : "No description provided.",
-          );
-          CherryToast.success(
-            inheritThemeColors: true,
-            title: Text("Berhasil menambahkan data!"),
-            borderRadius: 0,
-          ).show(context);
-          _nameController.clear();
-          _jobTitleController.clear();
-          _companyController.clear();
-          _locationController.clear();
-          _descriptionController.clear();
-        } else {
-          CherryToast.error(
-            inheritThemeColors: true,
-            title: Text("Nama dan pekerjaan harus diisi!"),
-            borderRadius: 0,
-          ).show(context);
-        }
-        Navigator.pop(context);
-      },
-    );
-  }
-
-  void _deleteForm() {
-    SimpleAlertDialog.show(
-      context,
-      assetImagepath: AnimatedImage.warning,
-      buttonsColor: Colors.green,
-      title: AlertTitleText("Konfirmasi Hapus Data"),
-      content: AlertContentText("Yakin ingin menghapus data?"),
-      onConfirmButtonPressed: (ctx) {
-        _nameController.clear();
-        _jobTitleController.clear();
-        _companyController.clear();
-        _locationController.clear();
-        _descriptionController.clear();
-        CherryToast.success(
-          inheritThemeColors: true,
-          title: Text("Berhasil menghapus data!"),
-          borderRadius: 0,
-        ).show(context);
-        Navigator.pop(context);
-      },
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
+    // Data untuk setiap card di dashboard
+    final List<_DashboardItem> items = [
+      _DashboardItem(
+        title: "Pertemuan 4",
+        icon: Icons.menu_book,
+        iconColor: Colors.blue,
+        bgColor: Color(0xFFDCE8F8),
+      ),
+      _DashboardItem(
+        title: "Pertemuan 5",
+        icon: Icons.menu_book,
+        iconColor: Colors.green,
+        bgColor: Color(0xFFD6F0D6),
+      ),
+      _DashboardItem(
+        title: "Pertemuan 6",
+        icon: Icons.menu_book,
+        iconColor: Colors.orange,
+        bgColor: Color(0xFFFFF3D6),
+      ),
+      _DashboardItem(
+        title: "Pertemuan 7",
+        icon: Icons.menu_book,
+        iconColor: Colors.purple,
+        bgColor: Color(0xFFECD8F8),
+      ),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        title: Text("Pertemuan 4 dan Pertemuan 5"),
+        foregroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          "Dashboard",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 15),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          // Di layar lebar (desktop fullscreen), naikkan aspect ratio agar card lebih ramping
+          // Di layar kecil (mobile), tetap pakai ratio normal
+          final double ratio = constraints.maxWidth > 600 ? 1.6 : 0.95;
 
-            // Section Title
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Edit Profile",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blueGrey,
-                  ),
-                ),
+          return Padding(
+            padding: EdgeInsets.all(16),
+            child: GridView.builder(
+              itemCount: items.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 14,
+                mainAxisSpacing: 14,
+                childAspectRatio: ratio,
               ),
-            ),
-
-            SizedBox(height: 10),
-
-            // Form Nama
-            _buildTextField(
-              controller: _nameController,
-              label: "Nama",
-              hint: "Masukkan nama anda...",
-              icon: Icons.person,
-            ),
-
-            // Form Pekerjaan
-            _buildTextField(
-              controller: _jobTitleController,
-              label: "Pekerjaan",
-              hint: "Masukkan data pekerjaan anda...",
-              icon: Icons.work,
-            ),
-
-            // Form Perusahaan
-            _buildTextField(
-              controller: _companyController,
-              label: "Perusahaan",
-              hint: "Masukkan nama perusahaan anda...",
-              icon: Icons.business,
-            ),
-
-            // Form Lokasi
-            _buildTextField(
-              controller: _locationController,
-              label: "Lokasi Perusahaan",
-              hint: "Masukkan lokasi perusahaan anda bekerja...",
-              icon: Icons.location_on,
-            ),
-
-            // Form Deskripsi
-            _buildTextField(
-              controller: _descriptionController,
-              label: "Deskripsi",
-              hint: "Tentang diri anda...",
-              icon: Icons.description,
-              maxLines: 3,
-            ),
-
-            SizedBox(height: 10),
-
-            // Buttons Row
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  // Submit
-                  Expanded(
-                    child: InkWell(
-                      onTap: _submitForm,
-                      child: Container(
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(10),
+              itemBuilder: (context, index) {
+                final item = items[index];
+                return GestureDetector(
+                  onTap: () {
+                    if (index == 0) {
+                      // Pertemuan 4 → buka form submit
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              Pertemuan4Page(onProfileSubmit: onProfileSubmit),
                         ),
-                        child: Center(
-                          child: Text(
-                            "Submit",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
-                          ),
+                      );
+                    } else if (index == 1) {
+                      // Pertemuan 5 → buka jadwal kuliah
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Pertemuan5Page(),
                         ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(width: 10),
-
-                  // Delete
-                  Expanded(
-                    child: InkWell(
-                      onTap: _deleteForm,
-                      child: Container(
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10),
+                      );
+                    } else if (index == 2) {
+                      // Pertemuan 6 → buka form checkbox
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Pertemuan6Page(),
                         ),
-                        child: Center(
-                          child: Text(
-                            "Delete",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
-                          ),
+                      );
+                    } else {
+                      // Pertemuan lain → placeholder (belum ada isinya)
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("${item.title} belum tersedia"),
+                          duration: Duration(seconds: 1),
                         ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            SizedBox(height: 10),
-
-            // Show Dialog
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text("Tutup"),
+                      );
+                    }
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.06),
+                          blurRadius: 10,
+                          offset: Offset(0, 4),
                         ),
                       ],
-                      title: Text("AlertDialog"),
-                      contentPadding: EdgeInsets.all(20),
-                      content: Text("Ini AlertDialog"),
                     ),
-                  );
-                },
-                child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Show Dialog",
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Icon circle
+                        Container(
+                          width: 64,
+                          height: 64,
+                          decoration: BoxDecoration(
+                            color: item.bgColor,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            item.icon,
+                            color: item.iconColor,
+                            size: 32,
+                          ),
+                        ),
+                        SizedBox(height: 14),
+                        // Title
+                        Text(
+                          item.title,
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
-
-            SizedBox(height: 20),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
+}
+
+class _DashboardItem {
+  final String title;
+  final IconData icon;
+  final Color iconColor;
+  final Color bgColor;
+
+  _DashboardItem({
+    required this.title,
+    required this.icon,
+    required this.iconColor,
+    required this.bgColor,
+  });
 }
