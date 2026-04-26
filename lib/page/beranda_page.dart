@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hasnan_latihan2pertemuan4/page/pertemuan4_page.dart';
-import 'package:hasnan_latihan2pertemuan4/page/pertemuan5_page.dart';
-import 'package:hasnan_latihan2pertemuan4/page/pertemuan6_page.dart';
+import 'package:hasnan_latihan2pertemuan4/page/pertemuan/pertemuan4_page.dart';
+import 'package:hasnan_latihan2pertemuan4/page/pertemuan/pertemuan5_page.dart';
+import 'package:hasnan_latihan2pertemuan4/page/pertemuan/pertemuan6_page.dart';
 
 class BerandaPage extends StatelessWidget {
   final Function({
