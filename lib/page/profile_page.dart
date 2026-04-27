@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hasnan_latihan2pertemuan4/page/pertemuan/pertemuan4_page.dart';
 
 class ProfilePage extends StatefulWidget {
   final String name;
@@ -6,6 +7,13 @@ class ProfilePage extends StatefulWidget {
   final String company;
   final String location;
   final String description;
+  final Function({
+    required String name,
+    required String jobTitle,
+    required String company,
+    required String location,
+    required String description,
+  }) onProfileSubmit;
 
   const ProfilePage({
     super.key,
@@ -14,6 +22,7 @@ class ProfilePage extends StatefulWidget {
     required this.company,
     required this.location,
     required this.description,
+    required this.onProfileSubmit,
   });
 
   @override
@@ -166,6 +175,35 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: TextStyle(fontSize: 12, color: Colors.black38),
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoItem({required IconData icon, required String text}) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 12),
+      child: Row(
+        children: [
+          Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.blueAccent.withAlpha(25),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, color: Colors.blueAccent, size: 24),
+          ),
+          SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.black87,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ],
@@ -544,6 +582,30 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                       ),
+
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              "Following",
+                              style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            SizedBox(height: 7),
+                            Text(
+                              "406",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -791,6 +853,107 @@ class _ProfilePageState extends State<ProfilePage> {
                       institution: "SMK Media Informatika Jakarta Selatan",
                       degree: "Rekayasa Perangkat Lunak",
                       period: "2021 - 2024",
+                    ),
+                  ],
+                ),
+              ),
+
+              // Information Section
+              SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Information",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.blueGrey,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(12, 12, 12, 0),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        children: [
+                          _buildInfoItem(
+                            icon: Icons.email,
+                            text: "hasnanfathir.alghiffary@example.com",
+                          ),
+                          _buildInfoItem(
+                            icon: Icons.phone,
+                            text: "+62 823-1071-5475",
+                          ),
+                          _buildInfoItem(
+                            icon: Icons.cake,
+                            text: "March 18, 2006",
+                          ),
+                          _buildInfoItem(
+                            icon: Icons.work,
+                            text:
+                                "FLutter Mobile Engineer Universitas Pamulang",
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 24),
+
+              // Action Buttons
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Pertemuan4Page(
+                                onProfileSubmit: widget.onProfileSubmit,
+                                isFromProfile: true,
+                              ),
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.edit, size: 20),
+                        label: Text("Edit Profile", style: TextStyle(fontWeight: FontWeight.bold)),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          backgroundColor: Colors.blueAccent,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Fitur Share Profile belum tersedia")),
+                          );
+                        },
+                        icon: Icon(Icons.share, size: 20),
+                        label: Text("Share Profile", style: TextStyle(fontWeight: FontWeight.bold)),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.blueAccent,
+                          side: BorderSide(color: Colors.blueAccent),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        ),
+                      ),
                     ),
                   ],
                 ),

@@ -12,7 +12,13 @@ class Pertemuan4Page extends StatefulWidget {
   })
   onProfileSubmit;
 
-  const Pertemuan4Page({super.key, required this.onProfileSubmit});
+  final bool isFromProfile;
+
+  const Pertemuan4Page({
+    super.key,
+    required this.onProfileSubmit,
+    this.isFromProfile = false,
+  });
 
   @override
   State<Pertemuan4Page> createState() => _Pertemuan4PageState();
@@ -97,7 +103,7 @@ class _Pertemuan4PageState extends State<Pertemuan4Page> {
           CherryToast.success(
             inheritThemeColors: true,
             title: Text("Berhasil menambahkan data!"),
-            borderRadius: 0,
+            borderRadius: 16,
           ).show(context);
           _nameController.clear();
           _jobTitleController.clear();
@@ -108,7 +114,7 @@ class _Pertemuan4PageState extends State<Pertemuan4Page> {
           CherryToast.error(
             inheritThemeColors: true,
             title: Text("Nama dan pekerjaan harus diisi!"),
-            borderRadius: 0,
+            borderRadius: 16,
           ).show(context);
         }
         Navigator.pop(context);
@@ -120,7 +126,7 @@ class _Pertemuan4PageState extends State<Pertemuan4Page> {
     SimpleAlertDialog.show(
       context,
       assetImagepath: AnimatedImage.warning,
-      buttonsColor: Colors.green,
+      buttonsColor: const Color.fromARGB(255, 175, 76, 76),
       title: AlertTitleText("Konfirmasi Hapus Data"),
       content: AlertContentText("Yakin ingin menghapus data?"),
       onConfirmButtonPressed: (ctx) {
@@ -132,7 +138,7 @@ class _Pertemuan4PageState extends State<Pertemuan4Page> {
         CherryToast.success(
           inheritThemeColors: true,
           title: Text("Berhasil menghapus data!"),
-          borderRadius: 0,
+          borderRadius: 16,
         ).show(context);
         Navigator.pop(context);
       },
@@ -145,7 +151,7 @@ class _Pertemuan4PageState extends State<Pertemuan4Page> {
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
-        title: Text("Pertemuan 4"),
+        title: Text(widget.isFromProfile ? "Menu Profile" : "Pertemuan 4"),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
@@ -294,49 +300,131 @@ class _Pertemuan4PageState extends State<Pertemuan4Page> {
               ],
             ),
 
-            SizedBox(height: 12),
+            if (!widget.isFromProfile) ...[
+              SizedBox(height: 12),
 
-            // Show Dialog
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text("Tutup"),
+              // Show Dialog
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                      ],
-                      title: Text("AlertDialog"),
-                      contentPadding: EdgeInsets.all(20),
-                      content: Text("Ini AlertDialog"),
-                    ),
-                  );
-                },
-                icon: Icon(Icons.info_outline, size: 20),
-                label: Text(
-                  "Show Dialog",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueGrey,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("Tutup"),
+                          ),
+                        ],
+                        title: Text("AlertDialog"),
+                        contentPadding: EdgeInsets.all(20),
+                        content: Text("Ini adalah AlertDialog"),
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.info_outline, size: 20),
+                  label: Text(
+                    "Show Dialog",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                   ),
-                  elevation: 2,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueGrey,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 2,
+                  ),
                 ),
               ),
-            ),
+
+              SizedBox(height: 12),
+
+              // Test Buttons Row
+              Row(
+                children: [
+                  // Test Toast
+                  Expanded(
+                    child: SizedBox(
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          CherryToast.info(
+                            inheritThemeColors: true,
+                            title: Text(
+                              "Ini adalah Toast Message!",
+                              style: TextStyle(fontWeight: FontWeight.w500),
+                            ),
+                            borderRadius: 16,
+                            toastDuration: Duration(seconds: 3),
+                          ).show(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orangeAccent,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 2,
+                        ),
+                        child: Text(
+                          "Test Toast",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 12),
+                  // Test Popup
+                  Expanded(
+                    child: SizedBox(
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          SimpleAlertDialog.show(
+                            context,
+                            assetImagepath: AnimatedImage.info,
+                            buttonsColor: Colors.blueAccent,
+                            title: AlertTitleText("Test Popup"),
+                            content: AlertContentText(
+                              "Ini adalah popup dengan animasi.",
+                            ),
+                            onConfirmButtonPressed: (ctx) {
+                              Navigator.pop(context);
+                            },
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.indigoAccent,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 2,
+                        ),
+                        child: Text(
+                          "Test Popup",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
 
             SizedBox(height: 20),
           ],

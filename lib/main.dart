@@ -58,6 +58,7 @@ class _MyAppState extends State<MyApp> {
             company: _profileCompany,
             location: _profileLocation,
             description: _profileDescription,
+            onProfileSubmit: _updateProfile,
           ),
         ][currentPage],
         bottomNavigationBar: SalomonBottomBar(

@@ -37,7 +37,7 @@ class _Pertemuan6PageState extends State<Pertemuan6Page> {
       CherryToast.warning(
         inheritThemeColors: true,
         title: Text("Pilih minimal 1 hobi!"),
-        borderRadius: 0,
+        borderRadius: 16,
       ).show(context);
       return;
     }
@@ -46,7 +46,7 @@ class _Pertemuan6PageState extends State<Pertemuan6Page> {
       CherryToast.warning(
         inheritThemeColors: true,
         title: Text("Anda harus menyetujui syarat & ketentuan!"),
-        borderRadius: 0,
+        borderRadius: 16,
       ).show(context);
       return;
     }
@@ -62,7 +62,7 @@ class _Pertemuan6PageState extends State<Pertemuan6Page> {
           inheritThemeColors: true,
           title: Text("Berhasil mendaftar!"),
           description: Text("Hobi: ${selectedHobi.join(', ')}"),
-          borderRadius: 0,
+          borderRadius: 16,
         ).show(context);
         Navigator.pop(context);
       },
@@ -73,7 +73,7 @@ class _Pertemuan6PageState extends State<Pertemuan6Page> {
     SimpleAlertDialog.show(
       context,
       assetImagepath: AnimatedImage.warning,
-      buttonsColor: Colors.green,
+      buttonsColor: const Color.fromARGB(255, 175, 76, 76),
       title: AlertTitleText("Konfirmasi Hapus Data"),
       content: AlertContentText("Yakin ingin menghapus semua pilihan?"),
       onConfirmButtonPressed: (ctx) {
@@ -84,7 +84,7 @@ class _Pertemuan6PageState extends State<Pertemuan6Page> {
         CherryToast.success(
           inheritThemeColors: true,
           title: Text("Berhasil menghapus semua pilihan!"),
-          borderRadius: 0,
+          borderRadius: 16,
         ).show(context);
         Navigator.pop(context);
       },
@@ -158,7 +158,7 @@ class _Pertemuan6PageState extends State<Pertemuan6Page> {
                       children: [
                         _buildLegendDot(Colors.red, "False"),
                         SizedBox(width: 12),
-                        _buildLegendDot(Colors.orange, "Netral"),
+                        _buildLegendDot(Colors.orange, "Null/Netral"),
                         SizedBox(width: 12),
                         _buildLegendDot(Colors.green, "True"),
                       ],

@@ -21,24 +21,28 @@ class BerandaPage extends StatelessWidget {
     final List<_DashboardItem> items = [
       _DashboardItem(
         title: "Pertemuan 4",
+        subtitle: "Form Edit Profile, Toast dan Popup",
         icon: Icons.menu_book,
         iconColor: Colors.blue,
         bgColor: Color(0xFFDCE8F8),
       ),
       _DashboardItem(
         title: "Pertemuan 5",
+        subtitle: "List View",
         icon: Icons.menu_book,
         iconColor: Colors.green,
         bgColor: Color(0xFFD6F0D6),
       ),
       _DashboardItem(
         title: "Pertemuan 6",
+        subtitle: "Checkbox False, Null dan True",
         icon: Icons.menu_book,
         iconColor: Colors.orange,
         bgColor: Color(0xFFFFF3D6),
       ),
       _DashboardItem(
         title: "Pertemuan 7",
+        subtitle: "Radio Button",
         icon: Icons.menu_book,
         iconColor: Colors.purple,
         bgColor: Color(0xFFECD8F8),
@@ -149,6 +153,23 @@ class BerandaPage extends StatelessWidget {
                             color: Colors.black87,
                           ),
                         ),
+                        if (item.subtitle != null) ...[
+                          SizedBox(height: 4),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Text(
+                              item.subtitle!,
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: Colors.black54,
+                                height: 1.2,
+                              ),
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ),
@@ -164,12 +185,14 @@ class BerandaPage extends StatelessWidget {
 
 class _DashboardItem {
   final String title;
+  final String? subtitle;
   final IconData icon;
   final Color iconColor;
   final Color bgColor;
 
   _DashboardItem({
     required this.title,
+    this.subtitle,
     required this.icon,
     required this.iconColor,
     required this.bgColor,
