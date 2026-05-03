@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hasnan_latihan2pertemuan4/page/pertemuan/pertemuan4_page.dart';
-import 'package:hasnan_latihan2pertemuan4/page/pertemuan/pertemuan5_page.dart';
-import 'package:hasnan_latihan2pertemuan4/page/pertemuan/pertemuan6_page.dart';
+import 'package:hasnan_latihan2pertemuan4/pertemuan/pertemuan4.dart';
+import 'package:hasnan_latihan2pertemuan4/pertemuan/pertemuan5.dart';
+import 'package:hasnan_latihan2pertemuan4/pertemuan/pertemuan6.dart';
+import 'package:hasnan_latihan2pertemuan4/pertemuan/pertemuan7.dart';
 
 class BerandaPage extends StatelessWidget {
   final Function({
@@ -17,7 +18,7 @@ class BerandaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Data untuk setiap card di dashboard
+    // Card Pertemuan
     final List<_DashboardItem> items = [
       _DashboardItem(
         title: "Pertemuan 4",
@@ -47,6 +48,20 @@ class BerandaPage extends StatelessWidget {
         iconColor: Colors.purple,
         bgColor: Color(0xFFECD8F8),
       ),
+      _DashboardItem(
+        title: "Pertemuan 8",
+        subtitle: "",
+        icon: Icons.menu_book,
+        iconColor: Colors.red,
+        bgColor: Color(0xFFECD8F8),
+      ),
+      _DashboardItem(
+        title: "Pertemuan 9",
+        subtitle: "",
+        icon: Icons.menu_book,
+        iconColor: Colors.cyan,
+        bgColor: Color(0xFFECD8F8),
+      ),
     ];
 
     return Scaffold(
@@ -61,8 +76,6 @@ class BerandaPage extends StatelessWidget {
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          // Di layar lebar (desktop fullscreen), naikkan aspect ratio agar card lebih ramping
-          // Di layar kecil (mobile), tetap pakai ratio normal
           final double ratio = constraints.maxWidth > 600 ? 1.6 : 0.95;
 
           return Padding(
@@ -80,7 +93,7 @@ class BerandaPage extends StatelessWidget {
                 return GestureDetector(
                   onTap: () {
                     if (index == 0) {
-                      // Pertemuan 4 → buka form submit
+                      // Pertemuan 4
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -89,7 +102,7 @@ class BerandaPage extends StatelessWidget {
                         ),
                       );
                     } else if (index == 1) {
-                      // Pertemuan 5 → buka jadwal kuliah
+                      // Pertemuan 5
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -97,19 +110,33 @@ class BerandaPage extends StatelessWidget {
                         ),
                       );
                     } else if (index == 2) {
-                      // Pertemuan 6 → buka form checkbox
+                      // Pertemuan 6
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => Pertemuan6Page(),
                         ),
                       );
-                    } else {
-                      // Pertemuan lain → placeholder (belum ada isinya)
+                    } else if (index == 3) {
+                      // Pertemuan 7
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Pertemuan7Page(),
+                        ),
+                      );
+                    } else if (index == 4) {
+                      // Pertemuan 8
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("${item.title} belum tersedia"),
-                          duration: Duration(seconds: 1),
+                        const SnackBar(
+                          content: Text("Pertemuan 8 belum tersedia"),
+                        ),
+                      );
+                    } else if (index == 5) {
+                      // Pertemuan 9
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Pertemuan 9 belum tersedia"),
                         ),
                       );
                     }

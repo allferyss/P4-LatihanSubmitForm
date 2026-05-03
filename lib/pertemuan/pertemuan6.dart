@@ -99,7 +99,7 @@ class _Pertemuan6PageState extends State<Pertemuan6Page> {
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
-        title: Text("Pertemuan 6"),
+        title: Text("Pertemuan 6 - CheckboxButton"),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),

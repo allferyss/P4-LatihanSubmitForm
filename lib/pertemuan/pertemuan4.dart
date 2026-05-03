@@ -151,7 +151,11 @@ class _Pertemuan4PageState extends State<Pertemuan4Page> {
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
-        title: Text(widget.isFromProfile ? "Menu Profile" : "Pertemuan 4"),
+        title: Text(
+          widget.isFromProfile
+              ? "Menu Profile"
+              : "Pertemuan 4 - Toast & Popup Alert Dialog",
+        ),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),

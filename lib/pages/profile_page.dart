@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hasnan_latihan2pertemuan4/page/pertemuan/pertemuan4_page.dart';
+import 'package:hasnan_latihan2pertemuan4/pertemuan/pertemuan4.dart';
 
 class ProfilePage extends StatefulWidget {
   final String name;

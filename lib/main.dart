@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hasnan_latihan2pertemuan4/page/beranda_page.dart';
-
-import 'package:hasnan_latihan2pertemuan4/page/profile_page.dart';
-
+import 'package:hasnan_latihan2pertemuan4/pages/beranda_page.dart';
+import 'package:hasnan_latihan2pertemuan4/pages/profile_page.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 void main() {
