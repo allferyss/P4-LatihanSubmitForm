@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hasnan_latihan2pertemuan4/pages/autocomplete.dart';
 import 'package:hasnan_latihan2pertemuan4/pertemuan/pertemuan4.dart';
 import 'package:hasnan_latihan2pertemuan4/pertemuan/pertemuan5.dart';
 import 'package:hasnan_latihan2pertemuan4/pertemuan/pertemuan6.dart';
@@ -50,7 +51,7 @@ class BerandaPage extends StatelessWidget {
       ),
       _DashboardItem(
         title: "Pertemuan 8",
-        subtitle: "",
+        subtitle: "Autocomplete & Spinner",
         icon: Icons.menu_book,
         iconColor: Colors.red,
         bgColor: Color(0xFFECD8F8),
@@ -127,9 +128,10 @@ class BerandaPage extends StatelessWidget {
                       );
                     } else if (index == 4) {
                       // Pertemuan 8
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Pertemuan 8 belum tersedia"),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AutocompletePage(),
                         ),
                       );
                     } else if (index == 5) {
