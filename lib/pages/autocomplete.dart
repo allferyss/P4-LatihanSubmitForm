@@ -273,9 +273,8 @@ class _AutocompletePageState extends State<AutocompletePage> {
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
-        centerTitle: true,
         title: Text(
-          'Form Pendaftaran Mahasiswa',
+          'Pertemuan 8 - Autocomplete & Penggunaan Spinner',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),

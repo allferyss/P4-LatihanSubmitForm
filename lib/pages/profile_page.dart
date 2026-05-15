@@ -13,7 +13,8 @@ class ProfilePage extends StatefulWidget {
     required String company,
     required String location,
     required String description,
-  }) onProfileSubmit;
+  })
+  onProfileSubmit;
 
   const ProfilePage({
     super.key,
@@ -897,7 +898,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           _buildInfoItem(
                             icon: Icons.work,
                             text:
-                                "FLutter Mobile Engineer Universitas Pamulang",
+                                "Flutter Mobile Engineer - Universitas Pamulang",
                           ),
                         ],
                       ),
@@ -927,12 +928,17 @@ class _ProfilePageState extends State<ProfilePage> {
                           );
                         },
                         icon: Icon(Icons.edit, size: 20),
-                        label: Text("Edit Profile", style: TextStyle(fontWeight: FontWeight.bold)),
+                        label: Text(
+                          "Edit Profile",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(vertical: 12),
                           backgroundColor: Colors.blueAccent,
                           foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
                       ),
                     ),
@@ -941,17 +947,26 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: ElevatedButton.icon(
                         onPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Fitur Share Profile belum tersedia")),
+                            SnackBar(
+                              content: Text(
+                                "Fitur Share Profile belum tersedia",
+                              ),
+                            ),
                           );
                         },
                         icon: Icon(Icons.share, size: 20),
-                        label: Text("Share Profile", style: TextStyle(fontWeight: FontWeight.bold)),
+                        label: Text(
+                          "Share Profile",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(vertical: 12),
                           backgroundColor: Colors.white,
                           foregroundColor: Colors.blueAccent,
                           side: BorderSide(color: Colors.blueAccent),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
                       ),
                     ),
