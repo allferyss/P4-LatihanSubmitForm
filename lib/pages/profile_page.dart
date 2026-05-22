@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hasnan_latihan2pertemuan4/pertemuan/pertemuan4.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatefulWidget {
   final String name;
@@ -35,6 +37,15 @@ class _ProfilePageState extends State<ProfilePage> {
   final ScrollController _portfolioScrollController = ScrollController();
   bool _showScrollToTop = false;
 
+  // Path gambar lokal (null = pakai default online)
+  String? _localBannerPath;
+  String? _localAvatarPath;
+
+  static const String _defaultBannerUrl =
+      'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/think-positive-tumblr-banner-design-template-f84659542f8130fa09b67d8b3c8dfb39_screen.jpg?ts=1566598244';
+  static const String _defaultAvatarUrl =
+      'https://tr.rbxcdn.com/180DAY-d4a6d1564bf7c0e65447501bdb3cc584/420/420/FaceAccessory/Webp/noFilter';
+
   @override
   void initState() {
     super.initState();
@@ -53,6 +64,28 @@ class _ProfilePageState extends State<ProfilePage> {
     _scrollController.dispose();
     _portfolioScrollController.dispose();
     super.dispose();
+  }
+
+  Future<void> _pickBanner() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 85,
+    );
+    if (image != null) {
+      setState(() => _localBannerPath = image.path);
+    }
+  }
+
+  Future<void> _pickAvatar() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 85,
+    );
+    if (image != null) {
+      setState(() => _localAvatarPath = image.path);
+    }
   }
 
   void _scrollPortfolio(double offset) {
@@ -457,30 +490,93 @@ class _ProfilePageState extends State<ProfilePage> {
           padding: EdgeInsets.zero,
           child: Column(
             children: [
-              // Cover Photo + Avatar
-              Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/think-positive-tumblr-banner-design-template-f84659542f8130fa09b67d8b3c8dfb39_screen.jpg?ts=1566598244',
-                    ),
-                    scale: 1.0,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 200,
-                  child: Container(
-                    alignment: Alignment(0.0, 2.5),
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        'https://tr.rbxcdn.com/180DAY-d4a6d1564bf7c0e65447501bdb3cc584/420/420/FaceAccessory/Webp/noFilter',
+              // Cover Photo (Banner) + Avatar
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  // ── Banner ──
+                  GestureDetector(
+                    onTap: _pickBanner,
+                    child: Container(
+                      width: double.infinity,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: _localBannerPath != null
+                              ? FileImage(File(_localBannerPath!))
+                                  as ImageProvider
+                              : const NetworkImage(_defaultBannerUrl),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      radius: 60.0,
+                      child: Container(
+                        color: Colors.black.withValues(alpha: 0.15),
+                        alignment: Alignment.topRight,
+                        padding: const EdgeInsets.all(10),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: Colors.black54,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Icon(Icons.camera_alt,
+                                  color: Colors.white, size: 14),
+                              SizedBox(width: 4),
+                              Text(
+                                'Ganti Banner',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 11),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+
+                  // ── Avatar ──
+                  Positioned(
+                    bottom: -60,
+                    left: 0,
+                    right: 0,
+                    child: Center(
+                      child: GestureDetector(
+                        onTap: _pickAvatar,
+                        child: Stack(
+                          children: [
+                            CircleAvatar(
+                              backgroundImage: _localAvatarPath != null
+                                  ? FileImage(File(_localAvatarPath!))
+                                      as ImageProvider
+                                  : const NetworkImage(_defaultAvatarUrl),
+                              radius: 60.0,
+                            ),
+                            Positioned(
+                              bottom: 2,
+                              right: 2,
+                              child: Container(
+                                padding: const EdgeInsets.all(5),
+                                decoration: const BoxDecoration(
+                                  color: Colors.blueAccent,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                  size: 14,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
               // Name
