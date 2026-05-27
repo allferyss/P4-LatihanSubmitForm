@@ -7,6 +7,7 @@ import 'package:hasnan_latihan2pertemuan4/pertemuan/pertemuan5.dart';
 import 'package:hasnan_latihan2pertemuan4/pertemuan/pertemuan6.dart';
 import 'package:hasnan_latihan2pertemuan4/pertemuan/pertemuan7.dart';
 import 'package:hasnan_latihan2pertemuan4/pertemuan/pertemuan9.dart';
+import 'package:hasnan_latihan2pertemuan4/pertemuan/pertemuan10.dart';
 
 class BerandaPage extends StatelessWidget {
   final Function({
@@ -82,11 +83,10 @@ class BerandaPage extends StatelessWidget {
       ),
       _DashboardItem(
         title: "Pertemuan 10",
-        subtitle: "Belum Tersedia",
-        icon: Icons.lock_outline,
-        iconColor: Colors.grey,
-        bgColor: const Color(0xFFEEEEEE),
-        isComingSoon: true,
+        subtitle: "Tab Layout Laman",
+        icon: Icons.tab,
+        iconColor: Colors.teal,
+        bgColor: const Color(0xFFE0F2F1),
       ),
       _DashboardItem(
         title: "Pertemuan 11",
@@ -306,6 +306,13 @@ class BerandaPage extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (_) => const Pertemuan9Page()),
+        );
+        break;
+      case 8:
+        // Pertemuan 10
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const Pertemuan10Page()),
         );
         break;
     }
