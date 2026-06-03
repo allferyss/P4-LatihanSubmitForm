@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "758012922922",
+    "project_id": "hasnan-fluttersemester4",
+    "storage_bucket": "hasnan-fluttersemester4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758012922922:android:10724cb31196898edfc753",
+        "android_client_info": {
+          "package_name": "com.example.hasnan_latihan2pertemuan4"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGvXNbblfr6la2sjmHbzxl64QVy7y_cvE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,81 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:hasnan_latihan2pertemuan4/pages/beranda_page.dart';
-import 'package:hasnan_latihan2pertemuan4/pages/profile_page.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:hasnan_latihan2pertemuan4/auth/auth_page.dart';
+import 'package:hasnan_latihan2pertemuan4/firebase_options.dart';
+// ignore: unused_import
+import 'package:intl/date_symbol_data_file.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  int currentPage = 0;
-  String _profileName = "Hasnan Fathir Al Ghiffary";
-  String _profileJobTitle = "Flutter Software Engineer";
-  String _profileCompany = "Universitas Pamulang";
-  String _profileLocation = "Tangerang Selatan, Indonesia";
-  String _profileDescription =
-      "Hai, saya Hasnan Fathir Al Ghiffary. Saya adalah mahasiswa semester 4 jurusan Informatika di Universitas Pamulang. Saya adalah seorang junior mobile developer yang sedang belajar membangun aplikasi mobile.";
-
-  void _updateProfile({
-    required String name,
-    required String jobTitle,
-    required String company,
-    required String location,
-    required String description,
-  }) {
-    setState(() {
-      _profileName = name;
-      _profileJobTitle = jobTitle;
-      _profileCompany = company;
-      _profileLocation = location;
-      _profileDescription = description;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Authentication',
+      theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
+      home: AuthPage(),
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: Scaffold(
-        body: [
-          BerandaPage(onProfileSubmit: _updateProfile),
-          ProfilePage(
-            name: _profileName,
-            jobTitle: _profileJobTitle,
-            company: _profileCompany,
-            location: _profileLocation,
-            description: _profileDescription,
-            onProfileSubmit: _updateProfile,
-          ),
-        ][currentPage],
-        bottomNavigationBar: SalomonBottomBar(
-          currentIndex: currentPage,
-          onTap: (i) => setState(() => currentPage = i),
-          items: [
-            SalomonBottomBarItem(
-              icon: Icon(Icons.home),
-              title: Text("Beranda"),
-              selectedColor: Colors.blue,
-            ),
-            SalomonBottomBarItem(
-              icon: Icon(Icons.person),
-              title: Text("Profile"),
-              selectedColor: Colors.blue,
-            ),
-          ],
-        ),
-      ),
-    );
+    ); // MaterialApp
   }
 }
